@@ -1,9 +1,15 @@
 import React from 'react'
+import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth'
+import { app } from '../firebase';
 
 export default function OAuth() {
     const handleGoogleClick = async() => {
         try {
-            
+            const provider = new GoogleAuthProvider();
+            const auth = getAuth(app);
+
+            const result = await signInWithPopup(auth,provider);
+            console.log(result);0
         } catch (error) {
             console.log('problem with google',error);
         }
