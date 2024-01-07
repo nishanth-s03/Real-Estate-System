@@ -3,6 +3,7 @@ import { mongoose } from "mongoose";
 import dotenv from "dotenv";
 import UserRouter from "./routes/user.route.js";
 import AuthRouter from "./routes/auth.route.js";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 mongoose
@@ -16,6 +17,9 @@ mongoose
 
 const app = express();
 app.use(express.json());
+
+app.use(cookieParser());
+
 app.listen(3000, () => {
   console.log("Server Running On PORT:3000 !!");
 });
