@@ -19,6 +19,7 @@ import {
   signOutSuccess,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
   const fileRef = useRef(null);
@@ -106,18 +107,18 @@ export default function Profile() {
     }
   };
 
-  const handleSignOut = async() => {
+  const handleSignOut = async () => {
     try {
       dispatch(signOutStart());
-      const res = await fetch('/api/auth/signout');
+      const res = await fetch("/api/auth/signout");
       const data = await res.json();
-      if(data.success === false){
+      if (data.success === false) {
         dispatch(signOutFailure(data.message));
         return;
       }
       dispatch(signOutSuccess(data));
     } catch (error) {
-        dispatch(signOutFailure(data.message));
+      dispatch(signOutFailure(data.message));
     }
   };
 
@@ -174,10 +175,16 @@ export default function Profile() {
         />
         <button
           disabled={loading}
-          className="bg-green-500 text-white p-3 rounded-lg uppercase hover:opacity-80"
+          className="bg-slate-500 text-white p-3 rounded-lg uppercase hover:opacity-80"
         >
           {loading ? "Loading..." : "Update"}
         </button>
+        <Link
+          className="bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95"
+          to={"/create-listing"}
+        >
+          Create Listings
+        </Link>
       </form>
       <div className="flex justify-between mt-5">
         <span
@@ -186,10 +193,7 @@ export default function Profile() {
         >
           Delete Account
         </span>
-        <span 
-          onClick={handleSignOut} 
-          className="text-red-700 cursor-pointer"
-        >
+        <span onClick={handleSignOut} className="text-red-700 cursor-pointer">
           Sign Out
         </span>
       </div>
