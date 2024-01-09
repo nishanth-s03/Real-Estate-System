@@ -72,12 +72,14 @@ export default function Profile() {
         return;
       }
       dispatch(updateUserSuccess(data));
-      //console.log(data);
+      
       setUpdateSuccess(true);
     } catch (error) {
       dispatch(updateUserFailure(error.message)); 
     }
   };
+
+  
 
   return (
     <div className="p-3 max-w-lg mx-auto">
