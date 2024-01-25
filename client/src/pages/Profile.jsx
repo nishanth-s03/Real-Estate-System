@@ -123,7 +123,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="p-3 max-w-lg mx-auto">
+    <div className="p-5 max-w-lg mx-auto  bg-slate-100 rounded-lg m-4 shadow-xl shadow-black">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
@@ -137,7 +137,7 @@ export default function Profile() {
           onClick={() => fileRef.current.click()}
           src={formData.avatar || currentUser.avatar}
           alt="profile"
-          className="h-24 w-24 object-cover cursor-pointer rounded-full self-center mt-2"
+          className="h-24 w-24 object-cover cursor-pointer rounded-full self-center mt-2 hover:scale-110"
         />
         <p className="text-sm self-center">
           {fileUploadError ? (
@@ -189,11 +189,11 @@ export default function Profile() {
       <div className="flex justify-between mt-5">
         <span
           onClick={handleDeleteUser}
-          className="text-red-700 cursor-pointer"
+          className="text-red-700 cursor-pointer hover:underline"
         >
           Delete Account
         </span>
-        <span onClick={handleSignOut} className="text-red-700 cursor-pointer">
+        <span onClick={handleSignOut} className="text-red-700 cursor-pointer hover:underline">
           Sign Out
         </span>
       </div>
