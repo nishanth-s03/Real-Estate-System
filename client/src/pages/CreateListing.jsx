@@ -8,6 +8,8 @@ import {
 import { app } from "../firebase";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { TrashIcon } from "../components/IconSet";
+//import { TrashIcon } from "../components/IconSet";
 
 export default function CreateListing() {
   const { currentUser } = useSelector((state) => state.user);
@@ -366,7 +368,7 @@ export default function CreateListing() {
                   onClick={() => handleRemoveImage(index)}
                   className="p-3 text-white bg-red-600 rounded-lg uppercase hover:shadow-xl"
                 >
-                  Delete
+                  {TrashIcon}
                 </button>
               </div>
             ))}

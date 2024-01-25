@@ -20,6 +20,10 @@ import {
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import "primeicons/primeicons.css";
+import { EditIcon, TrashIcon } from "../components/IconSet";
+//import { TrashIcon } from "../components/IconSet";
+//import { set } from "mongoose";
 
 export default function Profile() {
   const fileRef = useRef(null);
@@ -29,6 +33,8 @@ export default function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [showListingsError, setShowListingsError] = useState(false);
+  const [userListings, setUserListings] = useState([]);
   const dispatch = useDispatch();
   // console.log(currentUser._id);
 
@@ -122,8 +128,23 @@ export default function Profile() {
     }
   };
 
+  const handleShowListings = async () => {
+    try {
+      setShowListingsError(false);
+      const res = await fetch(`/api/users/listings/${currentUser._id}`);
+      const data = await res.json();
+      if (data.success === false) {
+        setShowListingsError(true);
+        return;
+      }
+      setUserListings(data);
+    } catch (error) {
+      setShowListingsError(true);
+    }
+  };
+
   return (
-    <div className="p-5 max-w-lg mx-auto  bg-slate-100 rounded-lg m-4 shadow-xl shadow-black">
+    <div className="p-8 max-w-lg mx-auto  bg-slate-100 rounded-lg m-4 shadow-xl shadow-black">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
@@ -137,7 +158,7 @@ export default function Profile() {
           onClick={() => fileRef.current.click()}
           src={formData.avatar || currentUser.avatar}
           alt="profile"
-          className="h-24 w-24 object-cover cursor-pointer rounded-full self-center mt-2 hover:scale-110"
+          className="h-24 w-24 object-cover cursor-pointer shadow-md shadow-black rounded-full self-center mt-2 hover:scale-110"
         />
         <p className="text-sm self-center">
           {fileUploadError ? (
@@ -175,12 +196,12 @@ export default function Profile() {
         />
         <button
           disabled={loading}
-          className="bg-slate-500 text-white p-3 rounded-lg uppercase hover:opacity-80"
+          className="bg-slate-500 text-white p-3 rounded-lg shadow-md shadow-black uppercase hover:opacity-80"
         >
           {loading ? "Loading..." : "Update"}
         </button>
         <Link
-          className="bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95"
+          className="bg-green-700 text-white p-3 rounded-lg shadow-md shadow-black uppercase text-center hover:opacity-95"
           to={"/create-listing"}
         >
           Create Listings
@@ -193,7 +214,10 @@ export default function Profile() {
         >
           Delete Account
         </span>
-        <span onClick={handleSignOut} className="text-red-700 cursor-pointer hover:underline">
+        <span
+          onClick={handleSignOut}
+          className="text-red-700 cursor-pointer hover:underline"
+        >
           Sign Out
         </span>
       </div>
@@ -201,6 +225,49 @@ export default function Profile() {
       <p className="text-green-800 mt-5">
         {updateSuccess ? "Update Successful" : ""}
       </p>
+      <button
+        onClick={handleShowListings}
+        className="text-green-600 hover:scale-110 w-full"
+      >
+        Show Listings
+      </button>
+      <p className="text-red-600 mt-5">
+        {showListingsError ? "Error Showing Listing" : ""}
+      </p>
+
+      {userListings && userListings.length > 0 && (
+        <div>
+          <h1 className="text-2xl text-center font-bold my-7">Your Listings</h1>
+          {userListings.map((listing) => (
+            <div
+              key={listing._id}
+              className="bg-gray-400 p-3 h-20 rounded-lg shadow-md shadow-black hover:scale-110 border flex justify-between items-center mb-2 gap-4"
+            >
+              <Link to={`/listing/${listing._id}`}>
+                <img
+                  className="h-20 w-20 object-contain"
+                  src={listing.imageUrls[0]}
+                  alt="Listing Image"
+                />
+              </Link>
+              <Link
+                className="flex-1 text-md font-semibold  hover:underline truncate"
+                to={`/listing/${listing._id}`}
+              >
+                <p>{listing.name}</p>
+              </Link>
+              <div className="flex flex-row gap-4">
+                <button className="bg-red-700 text-white p-2 rounded-lg text-sm  shadow-md shadow-black uppercase hover:opacity-80">
+                  {TrashIcon}
+                </button>
+                <button className="bg-green-700 text-white p-2 rounded-lg text-sm  shadow-md shadow-black uppercase hover:opacity-80">
+                  {EditIcon}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
