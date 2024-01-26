@@ -146,7 +146,7 @@ export default function Profile() {
   const handleListingDelete = async (listingId) => {
     try {
       const res = await fetch(`/api/listing/delete/${listingId}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
       const data = await res.json();
       if (data.success === false) {
@@ -276,12 +276,17 @@ export default function Profile() {
                 <p>{listing.name}</p>
               </Link>
               <div className="flex flex-row gap-4">
-                <button onClick={()=> handleListingDelete(listing._id)} className="bg-red-700 text-white p-2 rounded-lg text-sm  shadow-md shadow-black uppercase hover:opacity-80">
+                <button
+                  onClick={() => handleListingDelete(listing._id)}
+                  className="bg-red-700 text-white p-2 rounded-lg text-sm  shadow-md shadow-black uppercase hover:opacity-80"
+                >
                   {TrashIcon}
                 </button>
-                <button className="bg-green-700 text-white p-2 rounded-lg text-sm  shadow-md shadow-black uppercase hover:opacity-80">
-                  {EditIcon}
-                </button>
+                <Link to={`/update-listing/${listing._id}`}>
+                  <button className="bg-green-700 text-white p-2 rounded-lg text-sm  shadow-md shadow-black uppercase hover:opacity-80">
+                    {EditIcon}
+                  </button>
+                </Link>
               </div>
             </div>
           ))}
