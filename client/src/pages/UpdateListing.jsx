@@ -320,7 +320,7 @@ export default function UpdateListing() {
                   className="p-3 border border-gray-300 rounded-lg"
                   id="discountPrice"
                   min="0"
-                  max="100000"
+                  max="1000000000000"
                   required
                   onChange={handleChange}
                   value={formData.discountPrice}

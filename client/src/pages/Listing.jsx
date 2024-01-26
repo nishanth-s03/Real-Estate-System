@@ -63,8 +63,7 @@ export default function Listing() {
                 <div
                   className='h-[550px]'
                   style={{
-                    background: `url(${url}) center no-repeat`,
-                    backgroundSize: 'cover',
+                    background: `url(${url}) center no-repeat`
                   }}
                 ></div>
               </SwiperSlide>
