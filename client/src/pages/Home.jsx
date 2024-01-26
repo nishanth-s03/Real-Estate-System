@@ -5,6 +5,7 @@ import { Navigation } from 'swiper/modules';
 import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
 import ListingItem from '../components/ListingItem';
+import About from './About';
 
 export default function Home() {
   const [offerListings, setOfferListings] = useState([]);
@@ -128,6 +129,9 @@ export default function Home() {
             </div>
           </div>
         )}
+      </div>
+      <div>
+        <About/>
       </div>
     </div>
   );
