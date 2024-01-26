@@ -40,7 +40,7 @@ export default function Contact({ listing }) {
           ></textarea>
 
           <Link
-          to={`mailto:${landlord.email}?subject=Regarding ${listing.name}&body=${message}`}
+          to={`mailto:${landlord.email}?subject=Regarding ${listing.name}&body=${message + '\n \n Intrested Property link: ' + window.location.href}`}
           className='bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95'
           >
             Send Message          
