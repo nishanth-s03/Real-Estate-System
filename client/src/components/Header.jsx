@@ -68,7 +68,7 @@ export default function Header() {
                 alt="ProfileImg"
               />
             ) : (
-              <li className="hidden sm:inline text-slate-700 hover:underline">
+              <li className=" sm:inline-flex text-slate-700 hover:underline">
                 Sign In
               </li>
             )}
